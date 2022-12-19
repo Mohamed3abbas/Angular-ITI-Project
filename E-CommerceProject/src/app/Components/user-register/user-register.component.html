@@ -1,0 +1,77 @@
+<!-- <button class="btn btn-primary" (click)="InsertNewProduct()">Add Product</button> -->
+
+<form [formGroup]="userFormGroup">
+  <div class="mb-3">
+    <label for="FullName" class="form-label">Full Name</label>
+    <input [class.is-valid]="fullName?.valid ||fullName?.untouched" [class.is-invalid]="fullName?.invalid" type="text"
+      class="form-control" name="FullName" id="FullName" formControlName="fullName">
+    <!-- <div [hidden]="userFormGroup.get('fullName')?.valid || userFormGroup.get('fullName')?.untouched" class="alert alert-warning" > -->
+    <!-- <div [hidden]="fullName?.valid || fullName?.untouched" class="alert alert-warning" > -->
+    <div [hidden]="fullName?.valid || fullName?.untouched" class="alert alert-warning">
+      <small *ngIf="fullName?.errors?.['required']">Name Is Required</small>
+      <small *ngIf="fullName?.errors?.['minlength']">Name min length should be more than 5</small>
+    </div>
+  </div>
+  <br>
+  <div class="mb-3">
+    <label for="Email" class="form-label">Email</label>
+    <input [class.is-valid]="Email?.valid" [class.is-invalid]="Email?.invalid" type="email" class="form-control"
+      name="Email" id="Email" formControlName="Email">
+
+    <div [hidden]="Email?.valid || Email?.untouched" class="alert alert-warning">
+      <small *ngIf="Email?.errors?.['required']">Email Is Required</small>
+    </div>
+
+  </div>
+  <br>
+  <div formArrayName="mobileNo">
+    <div class="mb-3" *ngFor="let mobile of mobileNo.controls ; let i = index">
+      <label for="MobileNumber{{i+1}}" class="form-label">MobileNumber{{i+1}}</label>
+      <input type="number" class="form-control" name="MobileNumber{{i+1}}" id="MobileNumber{{i+1}}"
+        [formControlName]="i">
+      <!-- <button class="btn btn-primary d-block ms-auto" *ngIf="mobile.value && mobileNo.controls.length-1 == i" -->
+      <button class="btn btn-primary d-block ms-auto " *ngIf="mobile.value && mobileNo.controls.length-1 == i"
+        (click)="AddMobileNo()">+</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="mb-3">
+    <label for="Password" class="form-label">Password</label>
+    <input [class.is-valid]="Password?.valid" [class.is-invalid]="Password?.invalid" type="password"
+      class="form-control" name="Password" id="Password" formControlName="Password">
+    <div [hidden]="Password?.valid || Password?.untouched" class="alert alert-warning">
+      <small *ngIf="Password?.errors?.['required']">Password Is Required</small>
+      <small *ngIf="Password?.errors?.['minlength']">Password min length should be more than 6</small>
+    </div>
+  </div>
+  <br>
+
+  <div formGroupName="Address"> Address :
+    <div class="mb-3 ms-4">
+      <label for="City" class="form-label">City</label>
+      <input type="text" class="form-control" name="City" id="City" formControlName="City">
+
+      <!-- <div [hidden]="city?.valid || city?.untouched" class="alert alert-warning">
+        <small *ngIf="city?.errors?.['required']">city Is Required</small>
+      </div> -->
+    </div>
+
+    <div class="mb-3 ms-4">
+      <label for="PostalCode" class="form-label">PostalCode</label>
+      <input type="text" class="form-control" name="PostalCode" id="PostalCode" formControlName="PostalCode">
+    </div>
+    <div class="mb-3 ms-4">
+      <label for="Street" class="form-label">Street</label>
+      <input type="text" class="form-control" name="Street" id="Street" formControlName="Street">
+    </div>
+  </div>
+
+  <!-- <button class="btn btn-primary" [disabled]="userFormGroup.invalid">Sign Up</button> -->
+  <button class="btn btn-primary">Sign Up</button>
+</form>
+
+{{userFormGroup.value|json}}
+
+<!-- {{NewProd|json}} -->

@@ -1,0 +1,46 @@
+<button class="btn btn-success" [routerLink]="['/AddProduct']">Add New Product</button>
+<table class="table m-2">
+  <thead class="bg-dark text-light">
+    <tr>
+      <th scope="col">NO</th>
+      <th scope="col">Name</th>
+      <th scope="col">Image</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+      <th scope="col">Count</th>
+      <th scope="col">Details</th>
+      <th scope="col">Buy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container  *ngFor="let product of iproductlistOfCat;let i=index; ">
+      <!-- <tr [ngStyle]="{'background-color':(product.quantity==0)?'red':'lightblue','color':(product.quantity==0)?'white':'black'}"  [hidden]="product.quantity ==0" [class.bg-warning]="product.quantity==1"> -->
+      <!-- <tr [ngStyle]="{'background-color':(product.quantity==0)?'red':'white','color':(product.quantity==0)?'blue':'black',
+      'background-color':(product.quantity==1)?'yellow':'white','color':(product.quantity==1)?'red':'black',
+      'background-color':(product.quantity==2)?'lightyellow':'white','color':(product.quantity==2)?'red':'black'}"> -->
+      <tr  [ngStyle]="{'background-color':(product.quantity==0)?'#FFCCCB':'white','color':(product.quantity==0)?'white':'black'}">
+        <td>{{i+1}}</td>
+        <td>{{product.name}}</td>
+        <td><img [src]="product.imgURL" width="150" height="150" class="rounded" alt=""></td>
+        <!-- <td>{{product.quantity}}</td> -->
+        <td>
+          <ng-container [ngSwitch]="product.quantity">
+            <ng-container *ngSwitchCase="0">OutOfStock</ng-container>
+            <ng-container *ngSwitchCase="1">Last One Item</ng-container>
+            <ng-container *ngSwitchCase="2">Last Two Item</ng-container>
+            <ng-container *ngSwitchDefault>{{product.quantity}}</ng-container>
+          </ng-container>
+        </td>
+
+        <td>{{product.price}}</td>
+        <td> <input class="form-control" type="number" #itemCount></td>
+        <!-- Solution -->
+        <!-- <td><Button [disabled]="product.quantity ==0" (click)="OpenProductDetails(product.id)" class="btn btn-Primary">Details</Button></td> -->
+        <!-- Another Solution -->
+        <td><a [routerLink]="['/Products',product.id]" (click)="OpenProductDetails(product.id)" class="btn btn-Primary">Details</a></td>
+        <td><Button [disabled]="product.quantity ==0" (click)="UpdateProduct(product.id,product.price,itemCount.value)" class="btn btn-success">Add To
+            Cart</Button></td>
+      </tr>
+    </ng-container>
+  </tbody>
+  <!-- {{TotalPriceOfCart}} -->
